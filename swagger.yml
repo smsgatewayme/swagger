@@ -1,0 +1,852 @@
+swagger: '2.0'
+info:
+  title: SMS Gateway Me API
+  version: 4.0.0
+schemes:
+  - https
+host: smsgateway.me
+basePath: /api/v4
+produces:
+  - application/json
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - Authorization: []
+responses:
+  400:
+    description: Bad Request
+    schema:
+      $ref: '#/definitions/ErrorResponse'
+  401:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/ErrorResponse'
+  403:
+    description: Forbidden
+    schema:
+      $ref: '#/definitions/ErrorResponse'
+  500:
+    description: Internal Server Error
+    schema:
+      $ref: '#/definitions/FatalResponse'
+  default:
+    description: Unexpected error
+    schema:
+      $ref: '#/definitions/FatalResponse'
+paths:
+  /device/{id}:
+    get:
+      summary: Get a specific device
+      operationId: getDevice
+      tags:
+        - Device
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Device
+          schema:
+            $ref: '#/definitions/Device'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /device/search:
+    post:
+      summary: Search devices
+      operationId: searchDevices
+      parameters:
+        -
+          name: search
+          in: body
+          description: Search Criteria
+          required: false
+          schema:
+            $ref: '#/definitions/Search'
+      tags:
+        - Device
+      responses:
+        200:
+          description: Device search results
+          schema:
+            $ref: '#/definitions/DeviceSearchResult'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /message/send:
+    post:
+      summary: Send messages
+      operationId: sendMessages
+      tags:
+        - Message
+      parameters:
+        -
+          name: messages
+          in: body
+          description: messages to send
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SendMessageRequest'
+      responses:
+        200:
+          description: Messages
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Message'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /message/cancel:
+    post:
+      summary: Cancel messages
+      operationId: cancelMessages
+      tags:
+        - Message
+      parameters:
+        -
+          name: messages
+          in: body
+          description: messages to cancel
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CancelMessageRequest'
+      responses:
+        200:
+          description: Messages
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Message'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /message/{id}:
+    get:
+      summary: Get a specific message
+      operationId: getMessage
+      tags:
+        - Message
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Message
+          schema:
+            $ref: '#/definitions/Message'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /message/search:
+    post:
+      summary: Search messages
+      operationId: searchMessages
+      parameters:
+        -
+          name: search
+          in: body
+          description: Search Criteria
+          required: false
+          schema:
+            $ref: '#/definitions/Search'
+      tags:
+        - Message
+      responses:
+        200:
+          description: Message search results
+          schema:
+            $ref: '#/definitions/MessageSearchResult'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /contact:
+    post:
+      summary: Create Contacts
+      operationId: createContacts
+      tags:
+        - Contact
+      parameters:
+        -
+          name: contacts
+          in: body
+          description: contacts to create
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CreateContactRequest'
+      responses:
+        200:
+          description: Contacts
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Contact'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /contact/search:
+    post:
+      summary: Search contacts
+      operationId: searchContacts
+      parameters:
+        -
+          name: search
+          in: body
+          description: Search Criteria
+          required: false
+          schema:
+            $ref: '#/definitions/Search'
+      tags:
+        - Contact
+      responses:
+        200:
+          description: Contact search results
+          schema:
+            $ref: '#/definitions/ContactSearchResult'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /contact/{id}:
+    get:
+      summary: Get a specific contact
+      operationId: getContact
+      tags:
+        - Contact
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Contact
+          schema:
+            $ref: '#/definitions/Contact'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+    put:
+      summary: Update contact
+      operationId: updateContact
+      tags:
+        - Contact
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+        -
+          name: contact
+          in: body
+          description: contacts details
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateContactRequest'
+      responses:
+        200:
+          description: Contact
+          schema:
+            $ref: '#/definitions/Contact'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /contact/{id}/phone-number/{phone-number}:
+    put:
+      summary: The phone number to add
+      operationId: addPhoneNumber
+      tags:
+        - Contact
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+        -
+          name: phone-number
+          in: path
+          description: phone number to add
+          required: true
+          type: string
+      responses:
+        200:
+          description: Contact
+          schema:
+            $ref: '#/definitions/Contact'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+    delete:
+      summary: The phone number to delete
+      operationId: deletePhoneNumber
+      tags:
+        - Contact
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+        -
+          name: phone-number
+          in: path
+          description: phone number to add
+          required: true
+          type: string
+      responses:
+        200:
+          description: Contact
+          schema:
+            $ref: '#/definitions/Contact'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /callback:
+    post:
+      summary: Create Callback
+      operationId: createCallback
+      tags:
+        - Callback
+      parameters:
+        -
+          name: callback
+          in: body
+          description: callback to create
+          required: true
+          schema:
+              $ref: '#/definitions/CreateCallbackRequest'
+      responses:
+        200:
+          description: Callback
+          schema:
+              $ref: '#/definitions/Callback'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /callback/{id}:
+    get:
+      summary: Get a specific callback
+      operationId: getCallback
+      tags:
+        - Callback
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Contact
+          schema:
+            $ref: '#/definitions/Callback'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+    put:
+      summary: Update callback
+      operationId: updateCallback
+      tags:
+        - Callback
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          type: string
+        -
+          name: callback
+          in: body
+          description: callback update data
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UpdateCallbackRequest'
+      responses:
+        200:
+          description: Callback
+          schema:
+            $ref: '#/definitions/Callback'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+  /callback/search:
+    post:
+      summary: Search callbacks
+      operationId: searchCallbacks
+      parameters:
+        -
+          name: search
+          in: body
+          description: Search Criteria
+          required: false
+          schema:
+            $ref: '#/definitions/Search'
+      tags:
+        - Callback
+      responses:
+        200:
+          description: Contact search results
+          schema:
+            $ref: '#/definitions/CallbackSearchResult'
+        400:
+          $ref: '#/responses/400'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+        default:
+          $ref: '#/responses/default'
+definitions:
+  DeviceSearchResult:
+    type: object
+    description: Device search results
+    properties:
+      count:
+        type: integer
+        description: Total number of results
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Device'
+  Device:
+    type: object
+    description: Device
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      attributes:
+        type: object
+        $ref: '#/definitions/DeviceAttributes'
+  DeviceAttributes:
+    type: object
+    description: Device attributes
+    properties:
+      phone_number:
+        type: string
+      make:
+        type: string
+      model:
+        type: string
+      provider:
+        type: string
+      country:
+        type: string
+      connection_type:
+        type: string
+      battery:
+        type: string
+        format: float
+      signal_percent:
+        type: string
+        format: float
+      wifi:
+        type: boolean
+      lat:
+        type: string
+      lng:
+        type: string
+      last_seen:
+        type: string
+        format: date-time
+  SendMessageRequest:
+    type: object
+    properties:
+      phone_number:
+        description: The number you wish to send the message to
+        type: string
+      message:
+        description: The message you wish to send
+        type: string
+      device_id:
+        description: The device you wish to send the message using
+        type: integer
+  CancelMessageRequest:
+    type: object
+    properties:
+      id:
+        description: The id of the message you wish to cancel
+        type: integer
+  MessageSearchResult:
+    type: object
+    description: Message search results
+    properties:
+      count:
+        type: integer
+        description: Total number of results
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Message'
+  Message:
+    type: object
+    properties:
+      id:
+        type: integer
+      device_id:
+        type: integer
+      message:
+        type: string
+      status:
+        type: string
+      log:
+        type: array
+        items:
+          $ref: '#/definitions/MessageLog'
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+  MessageLog:
+    type: object
+    properties:
+      status:
+        type: string
+      occurred_at:
+        type: string
+        format: date-time
+  ContactSearchResult:
+    type: object
+    description: Contact search results
+    properties:
+      count:
+        type: integer
+        description: Total number of results
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
+  CreateContactRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      phone_numbers:
+        type: array
+        items:
+          type: string
+  UpdateContactRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      phone_numbers:
+        type: array
+        items:
+          type: string
+  Contact:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      phone_numbers:
+        type: array
+        items:
+          type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+  CallbackSearchResult:
+    type: object
+    description: Callback search results
+    properties:
+      count:
+        type: integer
+        description: Total number of results
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Callback'
+  CreateCallbackRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      event:
+        type: string
+        enum:
+          - MESSAGE_UPDATED
+          - MESSAGE_CANCELED
+          - MESSAGE_DELIVERED
+          - MESSAGE_FAILED
+          - MESSAGE_MANUALLY_SENT
+          - MESSAGE_PENDING
+          - MESSAGE_QUEUED
+          - MESSAGE_RECEIVED
+          - MESSAGE_SENT
+      device_id:
+        type: integer
+      filter_type:
+        type: string
+        enum:
+          - Starts With
+          - Is From
+          - Contains
+      filter:
+        type: string
+      method:
+        type: string
+      action:
+        type: string
+      secret:
+        type: string
+  UpdateCallbackRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      event:
+        type: string
+        enum:
+          - MESSAGE_UPDATED
+          - MESSAGE_CANCELED
+          - MESSAGE_DELIVERED
+          - MESSAGE_FAILED
+          - MESSAGE_MANUALLY_SENT
+          - MESSAGE_PENDING
+          - MESSAGE_QUEUED
+          - MESSAGE_RECEIVED
+          - MESSAGE_SENT
+      device_id:
+        type: integer
+      filter_type:
+        type: string
+        enum:
+          - Starts With
+          - Is From
+          - Contains
+      filter:
+        type: string
+      method:
+        type: string
+      action:
+        type: string
+      secret:
+        type: string
+  Callback:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      event:
+        type: string
+      device_id:
+        type: integer
+      filter_type:
+        type: string
+      filter:
+        type: string
+      method:
+        type: string
+      action:
+        type: string
+      secret:
+        type: string
+  Search:
+    type: object
+    description: A search criteria
+    properties:
+      filters:
+        type: array
+        items:
+          type: array
+          items:
+            $ref: '#/definitions/SearchFilter'
+      order_by:
+        type: array
+        items:
+          $ref: '#/definitions/SearchOrderBy'
+      limit:
+        type: integer
+        format: int32
+      offset:
+        type: integer
+        format: int32
+  SearchFilter:
+    type: object
+    description: A search criteria filter
+    required:
+      - field
+      - operator
+      - value
+    properties:
+      field:
+        type: string
+      operator:
+        type: string
+      value:
+        type: string
+  SearchOrderBy:
+    type: object
+    description: A search criteria order by
+    required:
+      - field
+      - direction
+    properties:
+      field:
+        type: string
+      direction:
+        type: string
+  FatalResponse:
+    type: object
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Error'
+  Error:
+    type: object
+    properties:
+      key:
+        type: string
+      errors:
+        type: array
+        items:
+          type: string
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/Error'

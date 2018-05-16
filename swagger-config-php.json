@@ -1,0 +1,8 @@
+{
+    "invokerPackage": "SMSGatewayMe\\Client",
+    "modelPackage": "SMSGatewayMe\\Client\\Model",
+    "apiPackage": "SMSGatewayMe\\Client\\Api",
+    "composerVendorName": "smsgatewayme",
+    "composerProjectName": "client",
+    "variableNamingConvention": "camelCase"
+}
